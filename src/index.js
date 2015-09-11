@@ -227,8 +227,8 @@ var ReactTelephoneInput = React.createClass({
         // need to put the highlight on the current selected country if the dropdown is going to open up
         this.setState({
             showDropDown: !this.state.showDropDown,
-            highlightCountry: findWhere(this.props.onlyCountries, this.state.selectedCountry),
-            highlightCountryIndex: findIndex(this.props.onlyCountries, this.state.selectedCountry)
+            highlightCountry: findWhere(this.state.preferredCountries.concat(this.props.onlyCountries), this.state.selectedCountry),
+            highlightCountryIndex: findIndex(this.state.preferredCountries.concat(this.props.onlyCountries), this.state.selectedCountry)
         }, () => {
             // only need to scrool if the dropdown list is alive
             if(this.state.showDropDown) {
@@ -409,7 +409,7 @@ var ReactTelephoneInput = React.createClass({
     },
     getCountryDropDownList() {
 
-        var countryDropDownList = map([this.state.preferredCountries, ...this.props.onlyCountries], function(country, index) {
+        var countryDropDownList = map(this.state.preferredCountries.concat(this.props.onlyCountries), function(country, index) {
             let itemClasses = classNames({
                 country: true,
                 preferred: country.iso2 === 'us' || country.iso2 === 'gb',
