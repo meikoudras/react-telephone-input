@@ -18,6 +18,7 @@ var trim = require('lodash/string/trim');
 var startsWith = require('lodash/string/startsWith');
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var onClickOutside = require('react-onclickoutside');
 var classNames = require('classnames');
 var countryData = require('./country_data');
@@ -82,7 +83,7 @@ var ReactTelephoneInput = React.createClass({
         autoFormat: React.PropTypes.bool,
         defaultCountry: React.PropTypes.string,
         onlyCountries: React.PropTypes.arrayOf(React.PropTypes.object),
-        preferredCountries: React.PropTypes.arrayOf(React.PropTypes.object),
+        preferredCountries: React.PropTypes.arrayOf(React.PropTypes.string),
         onChange: React.PropTypes.func,
         onEnterKeyPress: React.PropTypes.func
     },
@@ -119,7 +120,7 @@ var ReactTelephoneInput = React.createClass({
             return;
         }
 
-        var container = this.refs.flagDropdownList.getDOMNode();
+        var container = ReactDOM.findDOMNode(this.refs.flagDropdownList);
 
         if(!container) {
           return;
@@ -221,7 +222,7 @@ var ReactTelephoneInput = React.createClass({
         return bestGuess;
     }),
     getElement(index) {
-        return this.refs[`flag_no_${index}`].getDOMNode();
+        return this.refs[`flag_no_${index}`];
     },
     handleFlagDropdownClick() {
         // need to put the highlight on the current selected country if the dropdown is going to open up
